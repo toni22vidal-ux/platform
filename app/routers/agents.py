@@ -8,5 +8,4 @@ def run_agent(payload: dict):
     data = payload.get("input", {})
     if not agent:
         raise HTTPException(400, "Missing 'agent'")
-    # Por ahora: eco (placeholder)
     return {"ok": True, "agent": agent, "input": data}
