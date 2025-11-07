@@ -1,0 +1,9 @@
+name: CodeQL
+on:
+  push: { branches: [ main ] }
+  pull_request:
+  schedule: [ { cron: '0 3 * * 0' } ]
+jobs:
+  analyze:
+    uses: github/codeql-action/.github/workflows/codeql.yml@v3
+    with: { languages: python }
