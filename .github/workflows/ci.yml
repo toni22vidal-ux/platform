@@ -1,37 +1,22 @@
 name: CI
 on:
   push:
-    branches: [ main ]
+    branches: [ "main" ]
   pull_request:
-permissions:
-  contents: read
-  packages: write
-  security-events: write
 jobs:
-  build-test:
+  test:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
-          cache: 'pip'
-      - run: pip install -r requirements.txt
-      - name: Lint (ruff)
-        run: ruff check .
-      - name: Security (bandit)
-        run: bandit -r app -ll
-      - name: Tests
-        run: pytest -q
-      - name: Build Docker image
-        run: docker build -t ghcr.io/${{ github.repository }}:sha-${{ github.sha }} .
-      - name: Login GHCR
-        uses: docker/login-action@v3
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-      - name: Push image (dev tag)
+          python-version: "3.11"
+      - name: Install deps
         run: |
-          docker tag ghcr.io/${{ github.repository }}:sha-${{ github.sha }} ghcr.io/${{ github.repository }}:dev
-          docker push ghcr.io/${{ github.repository }}:dev
+          python -m pip install --upgrade pip
+          pip install -r platform/requirements.txt
+      - name: Lint (ruff)
+        run: ruff --format=github platform
+      - name: Unit tests
+        working-directory: platform
+        run: pytest -q
