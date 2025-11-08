@@ -3,7 +3,7 @@ uvicorn==0.30.0
 pytest==8.2.0
 httpx==0.27.0
 ruff==0.6.9
-bandit==1.7.9
+bandit==1.8.6
 git+https://github.com/toni22vidal-ux/agents.git@main
 
 psycopg[binary]==3.2.3
