@@ -7,3 +7,5 @@ bandit==1.7.9
 git+https://github.com/toni22vidal-ux/agents.git@main
 
 psycopg[binary]==3.2.3
+
+psycopg[binary]==3.2.3
